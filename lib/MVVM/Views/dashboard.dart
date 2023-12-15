@@ -148,6 +148,12 @@ class _DashBoardViewState extends State<DashBoardView> {
                                         child: Text('Issue'),
                                       ),
                                     ),
+                                    DataColumn(
+                                      label: Container(
+                                        color: Colors.transparent,
+                                        child: Text('Priority'),
+                                      ),
+                                    ),
                                   ],
                                   rows: dashboardData.map((data) {
                                     return DataRow(
@@ -160,6 +166,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                                         DataCell(Text(data['order_id'] ?? "")),
                                         DataCell(Text(data['createdAt'] ?? "")),
                                         DataCell(Text(data['issue'] ?? "")),
+                                        DataCell(Text(data['priority'] ?? "")),
                                       ],
                                     );
                                   }).toList(),
