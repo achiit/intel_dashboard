@@ -14,6 +14,22 @@ class _DashBoardViewState extends State<DashBoardView> {
   final DashboardBloc _dashboardBloc = DashboardBloc(
       repository: DashboardRepository(dataProvider: DashboardDataProvider()));
 
+  // Add this function to sort the dashboardData based on priority
+  List<Map<String, dynamic>> sortDashboardData(
+      List<Map<String, dynamic>> data) {
+    data.sort((a, b) {
+      // Custom order: high > medium > low
+      Map<String, int> priorityOrder = {'high': 0, 'medium': 1, 'low': 2};
+
+      int priorityA = priorityOrder[a['priority'] ?? 'low']!;
+      int priorityB = priorityOrder[b['priority'] ?? 'low']!;
+
+      return priorityA.compareTo(priorityB);
+    });
+
+    return data;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,7 +94,9 @@ class _DashBoardViewState extends State<DashBoardView> {
         stream: _dashboardBloc.dashboardStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Map<String, dynamic>> dashboardData = snapshot.data!;
+            List<Map<String, dynamic>> dashboardData =
+                sortDashboardData(snapshot.data!); // Sort the data
+
             return ListView(
               scrollDirection: Axis.vertical,
               children: [
@@ -139,12 +157,6 @@ class _DashBoardViewState extends State<DashBoardView> {
                                     DataColumn(
                                       label: Container(
                                         color: Colors.transparent,
-                                        child: Text('Called At'),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Container(
-                                        color: Colors.transparent,
                                         child: Text('Issue'),
                                       ),
                                     ),
@@ -164,9 +176,26 @@ class _DashBoardViewState extends State<DashBoardView> {
                                             Text(data['id'].toString() ?? "")),
                                         DataCell(Text(data['name'] ?? "")),
                                         DataCell(Text(data['order_id'] ?? "")),
-                                        DataCell(Text(data['createdAt'] ?? "")),
                                         DataCell(Text(data['issue'] ?? "")),
-                                        DataCell(Text(data['priority'] ?? "")),
+                                        DataCell(
+                                          Container(
+                                            width: 80.0,
+                                            height: 30.0,
+                                            decoration: BoxDecoration(
+                                              color: data['priority'] == 'high'
+                                                  ? Colors.red
+                                                  : data['priority'] == 'medium'
+                                                      ? Colors.yellow
+                                                      : Colors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(14.0),
+                                            ),
+                                            child: Center(
+                                              child:
+                                                  Text(data['priority'] ?? ""),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     );
                                   }).toList(),
