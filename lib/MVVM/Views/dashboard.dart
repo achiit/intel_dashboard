@@ -53,7 +53,7 @@ class _DashBoardViewState extends State<DashBoardView> {
         title: Row(
           children: [
             Text(
-              'Dashboard',
+              'C̶U̶S̶T̶2merAI',
               style: TextStyle(color: Colors.black),
             ),
             SizedBox(width: 50.0),

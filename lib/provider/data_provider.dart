@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class DashboardDataProvider {
   final String baseUrl =
-      'https://a396-146-152-233-41.ngrok-free.app/get-all-data';
+      'https://twilio-backend-4rh3.onrender.com/get-all-data';
 
   Future<List<Map<String, dynamic>>> fetchDashboardData() async {
     final Map<String, String> customHeaders = {
