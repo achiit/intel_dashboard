@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Intel Dashboard',
-      theme: ThemeData(
+      theme: ThemeData(  
         primarySwatch: Colors.blue,
       ),
       home: const DashBoardView(),
